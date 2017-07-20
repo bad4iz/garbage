@@ -9,24 +9,31 @@
 </head>
 
 <body>
+<style>
+    .children{
+        padding: 20px;
+        margin: 20px;
+        max-width:500px;
+    }
+</style>
 
     <form name="upload">
         <input type="file" name="myfile">
         <input type="submit" value="Загрузить">
     </form>
 
-    <div id="parent" style="background-color: blue; width: 500px; height: 500px;">
-
+    <div id="один"  class="children"  style="background-color: blue;">
+один
     </div>
-    <div id="sa" class="children" draggable="true" style="background-color: aqua; width: 200px; height: 200px;">
-
+    <div id="два" class="children" draggable="true" style="background-color: aqua;">
+два
     </div>
-    <div id="s" class="children" draggable="true" style="background-color: #ffa69a; width: 200px; height: 200px;">
-
+    <div id="три" class="children" draggable="true" style="background-color: #ffa69a;">
+три
     </div>
 
-<div id="children"  class="children" draggable="true" style="background-color: #6cff82; width: 200px; height: 200px;">
-
+<div id="четыре"  class="children" draggable="true" style="background-color: #6cff82;">
+четыре
     </div>
 
 
