@@ -10,7 +10,7 @@
 
 window.onload = function () {
 
-    var sources = document.querySelectorAll("children");
+    var sources = document.querySelectorAll(".children");
 
     sources.forEach(source => {
     // начало операции drag
@@ -31,11 +31,11 @@ window.onload = function () {
     // конец операции drag
     source.addEventListener("dragend", function (evt) {
         this.style.border = ""; // удаляем стили добавленные в начале операции drag & drop
-        console.log(this);
+        console.log(this.id);
     }, false);
 
     });
-    var target = document.getElementById("pasrent");
+    var target = document.getElementById("parent");
 
     // перетаскиваемый объект попадает в область целевого элемента
     target.addEventListener("dragenter", function (evt) {
