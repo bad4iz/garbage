@@ -37,26 +37,19 @@ window.onload = function () {
             event.stopPropagation();
         }, false);
 
-    });
-
-
-    var targets = document.querySelectorAll(".children");
-
-
-    targets.forEach(target => {
 
 
         // перетаскиваемый объект попадает в область целевого элемента
-        target.addEventListener("dragenter", function (evt) {
+        source.addEventListener("dragenter", function (evt) {
             this.style.border = "3px solid red";
         }, false);
 
         // перетаскиваемый элемент покидает область целевого элемента
-        target.addEventListener("dragleave", function (evt) {
+        source.addEventListener("dragleave", function (evt) {
             this.style.border = "";
         }, false);
 
-        target.addEventListener("dragover", function (evt) {
+        source.addEventListener("dragover", function (evt) {
             // отменяем стандартное обработчик события dragover.
             // реализация данного обработчика по умолчанию не позволяет перетаскивать данные на целевой элемент, так как большая
             // часть веб страницы не может принимать данные.
@@ -66,7 +59,7 @@ window.onload = function () {
         }, false);
 
         // перетаскиваемый элемент отпущен над целевым элементом
-        target.addEventListener("drop", function (evt) {
+        source.addEventListener("drop", function (evt) {
 
             // прекращаем дальнейшее распространение события по дереву DOM и отменяем возможный стандартный обработчик установленный браузером.
             if (evt.preventDefault) evt.preventDefault();
