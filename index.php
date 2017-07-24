@@ -13,11 +13,16 @@ $CREATE = "CREATE TABLE IF NOT EXISTS `menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 $POSEV = "
-INSERT INTO `menu_id` (`id`, `title`, `parent_id`) VALUES
-(1, 'родитель 1', 0),
-(2, 'родитель 2', 0),
-(3, 'ребенок', 1),
-(4, 'второй ребенок', 1);";
+INSERT INTO `menu_id` (`title`, `parent_id`) VALUES
+('родитель 1', 0),
+('родитель 2', 0),
+('ребенок', 1),
+('второй ребенок', 1);
+('второй ребенок второго родителя', 2);
+('ребенок второго родителя', 2);
+('внук', 3);
+('внук', 3);
+";
 
 
 
@@ -26,6 +31,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $result = $pdo->exec($CREATE);  // возвращает количество затронутых строк
+    $result = $pdo->exec($POSEV);  // возвращает количество затронутых строк
 
     var_dump($result);
 } catch (PDOException $e) {
