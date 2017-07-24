@@ -6,23 +6,22 @@
  * Time: 20:40
  */
 
-$CREATE = "CREATE TABLE IF NOT EXISTS `menu` (
-  `id` int(11) NOT NULL,
-  `title` varchar(250) NOT NULL,
-  `parent_id` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+$CREATE = "CREATE TABLE IF NOT EXISTS `menu` ( `id` TINYINT(4) NOT NULL AUTO_INCREMENT , 
+                                `title` VARCHAR(250) NOT NULL , 
+                                `parent_id` TINYINT(4) NOT NULL , 
+                                PRIMARY KEY (`id`)) 
+                                ENGINE = InnoDB;";
 
 $POSEV = "
-INSERT INTO `menu_id` (`title`, `parent_id`) VALUES
+INSERT INTO `menu` (`title`, `parent_id`) VALUES
 ('родитель 1', 0),
 ('родитель 2', 0),
 ('ребенок', 1),
-('второй ребенок', 1);
-('второй ребенок второго родителя', 2);
-('ребенок второго родителя', 2);
-('внук', 3);
-('внук', 3);
-";
+('второй ребенок', 1),
+('второй ребенок второго родителя', 2),
+('ребенок второго родителя', 2),
+('внук', 3),
+('внук', 3);";
 
 
 
