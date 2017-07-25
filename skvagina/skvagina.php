@@ -9,22 +9,22 @@
 <div style="display: flex">
     <div style="
            width: 300px;
-           height: 900px;
+           height: 800px;
            background-image: url(imgg.png);
            background-size: contain;
            background-repeat: no-repeat;
            position: relative;
 ">
         <img id="bur" style="
-                transition: left cubic-bezier(0, 0, 1, 1);
-                position: absolute;
-                top: -100px;
-                left: 30%;
-                width: 21px;
+                    transition: left cubic-bezier(0, 0, 1, 1);
+                    position: absolute;
+                    top: -74px;
+                    left: 27%;
+                    width: 16px;
 
                 "
              src="nasadka2.png" alt="">
-        <img id="water" style="
+        <img id="water" class="water" style="
                opacity: 0;
                     /* transition: all 5s cubic-bezier(0, 0, 1, 1); */
                     position: absolute;
@@ -40,7 +40,7 @@
     <div id="back" style="
             transition-timing-function: cubic-bezier(0, 0, 1, 1);
             width: 800px;
-            height: 900px;
+            height: 800px;
             background-image: url(imgg.png);
             /* background-size: contain; */
             background-repeat: no-repeat;
@@ -49,61 +49,73 @@
             border-radius: 50%;
 ">
         <img style="
+
                     position: absolute;
                     top: 10%;
                     left: 43%;
                     width: 69px;
+                    z-index: 2;
                 "
              src="nasadka2.png" alt="">
-        <img id="water" style="
-               opacity: 1;
+        <img class="water" style="
+                     opacity: 0;
                     /* transition: all 5s cubic-bezier(0, 0, 1, 1); */
                     position: absolute;
-                    top: 100px;
-                    left: 25%;
-                    width: 51px;
+                    top: 144px;
+                    left: 38%;
+                    /* width: 51px; */
                     z-index: 1;
                 "
              src="поток.gif" alt="">
 
     </div>
 </div>
-<button onclick="">water</button>
+<p>
+    <input id="range" style="width: 100%;" type="range" min="0" max="900" step="1" value="0">
+</p>
+<button onclick="isWater()">water</button>
 <script>
-    var visible
-    function water(){
-        var water = document.querySelector('#water');
+    var visible = true;
 
-        water.style.opacity =
+    function isWater() {
+        var waters = document.querySelectorAll('.water');
+
+        waters.forEach(water => {
+            water.style.opacity = +visible;
+        });
+
+        visible = !visible;
     }
 
 
-//    var bur = document.queri
-var bur = document.querySelector('#bur');
-var back = document.querySelector('#back');
-var water = document.querySelector('#water');
-var step = 1;
+    //    var bur = document.queri
+    var bur = document.querySelector('#bur');
+    var back = document.querySelector('#back');
+    var water = document.querySelector('#water');
 
 
-function as (){
-    var burPosition = +bur.style.top.replace(/px/, '');
-    var backPosition = +back.style.backgroundPositionY.replace(/px/, '');
+    function as(step) {
+        var burPosition = +bur.style.top.replace(/px/, '');
+        var backPosition = +back.style.backgroundPositionY.replace(/px/, '');
 
 
-    bur.style.top =burPosition + step;
-    water.style.top =bur.style.top;
-    back.style.backgroundPositionY = backPosition - 3.65*step + "px";
-
-//if(burPosition > 200){
-//    water.style.opacity = 1;
-////    console.log(burPosition);
-//}else {
-//    water.style.opacity = 0;
-//}
-//    console.log(burPosition, backPosition);
-
-}
+        bur.style.top = step - 74;
+        water.style.top = bur.style.top;
+        back.style.backgroundPositionY = 400 -4.2 * step + "px";
 
 
-setInterval(as,100);
+    }
+
+    var range = document.querySelector('#range');
+
+    read("mousedown");
+    read("mousemove");
+
+    function read(evtType) {
+        range.addEventListener(evtType, function () {
+            window.requestAnimationFrame(function () {
+                as(range.value)
+            });
+        });
+    }
 </script>
