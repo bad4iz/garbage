@@ -4,7 +4,6 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 module.exports = {
   entry: './borehole/src/script/app.js',
   output: {
-    // path: './link/js/audit',
     library: 'Borehole',
     filename: './borehole/build/script/build.js',
   },
