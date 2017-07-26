@@ -1,40 +1,37 @@
-'use strict';
-
 const NODE_ENV = process.env.NODE_ENV || 'development';
-const webpack = require('webpack');
+
 
 module.exports = {
-    entry: "./link/js/audit/app.js",
-    output: {
-        // path: './link/js/audit',
-        library: "auditFJV",
-        filename: "./link/js/audit/build.js"
-    },
+  entry: './borehole/src/script/app.js',
+  output: {
+    // path: './link/js/audit',
+    library: 'Borehole',
+    filename: './borehole/build/script/build.js',
+  },
 
-    watch: true,
+  watch: true,
 
-    watchOptions: {
-        aggregateTimeout: 100
-    },
-    plugins: [ ],
-    devtool: 'source-map',
+  watchOptions: {
+    aggregateTimeout: 100,
+  },
+  plugins: [],
+  devtool: 'source-map',
 
-    module: {
-        loaders: [
-            {
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['es2015']
-                },
-            }
-        ]
-    },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015'],
+        },
+      },
+    ],
+  },
 };
 
 if (NODE_ENV == 'production') {
-    module.exports.plugins.push(
-
-    );
+  module.exports.plugins.push(
+  );
 }
