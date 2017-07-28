@@ -8,13 +8,13 @@
 
 require_once 'vendor/autoload.php';
 $pages = 1;
-if (!empty($_GET['pages'])){
+if (!empty($_GET['pages'])) {
     $pages = $_GET['pages'];
 }
 
 
 //$url = "https://api.bestbuy.com/v1/products((categoryPath.id=abcat0502000))?apiKey=jseFUuQ6dvbKAk5SgDsKFJgY&show=accessories.sku,addToCartUrl,bestSellingRank,categoryPath.id,categoryPath.name,color,condition,customerReviewAverage,customerReviewCount,description,details.name,details.value,dollarSavings,features.feature,freeShipping,frequentlyPurchasedWith.sku,image,includedItemList.includedItem,inStoreAvailability,inStoreAvailabilityText,longDescription,manufacturer,mobileUrl,modelNumber,name,onlineAvailability,onlineAvailabilityText,onSale,percentSavings,preowned,regularPrice,relatedProducts.sku,salePrice,shipping,shippingCost,shortDescription,sku,thumbnailImage,type,upc,url&pageSize=100&page={$pages}&format=json";
-$url = "https://api.bestbuy.com/beta/products/openBox(categoryPath.id=abcat0502000)?apiKey=jseFUuQ6dvbKAk5SgDsKFJgY";
+$url = "https://api.bestbuy.com/beta/products/openBox(categoryId=abcat0502000)?apiKey=jseFUuQ6dvbKAk5SgDsKFJgY&pageSize=100&page={$pages}";
 //$url = "https://api.bestbuy.com/beta/products/openBox?apiKey=jseFUuQ6dvbKAk5SgDsKFJgY";
 
 
@@ -32,17 +32,37 @@ $response = json_decode(curl_exec($ch));
 curl_close($ch);
 
 
+function mySortCondition($f1,$f2)
+{
+    if($f1->condition < $f2->condition) return -1;
+    elseif($f1->condition > $f2->condition) return 1;
+    else return 0;
+}
+
+
+
 //
 //d($response);
-$pages +=1;
-d($response);
+//d($response->metadata);
+//d($response->results);
+//d(6666);
+
+$string = '';
 
 ?>
-<form  method="get" action="?">
-    <input type="text" name="pages" value="<?=$pages?>">
-    <input type="submit">
-</form>
-<a href="./?page=<?=$pages?>">sssssssssssssssssssssssssssssssss ./?page=<?=$pages?></a>
+
+
+<h1>Страница №<?= $response->metadata->page->current ?> из <?= $response->metadata->page->total ?></h1>
+<h2>на странице <?= $response->metadata->page->size ?></h2>
+
+<a href="?pages=<?= $pages - 1 ?>">предыдущая</a>
+<a href="?pages=<?= $pages + 1 ?>">следующая</a>
+
+    <form  method="get" action="?">
+        <input type="text" name="save" placeholder="название файла" >
+        <input type="submit" value="save">
+    </form>
+
 <style>
     div {
         margin: 20px;
@@ -52,39 +72,43 @@ d($response);
         border-bottom: 1px solid #1d1e1e;
     }
 </style>
+<table>
+    <tr>
+        <th>sku</th>
+        <th>img</th>
+        <th>names</th>
+        <th>prices regular</th>
+        <th>certified </th>
+        <th>excellent </th>
 
-<?
-foreach ($response->products as $product) {
-//    d($product->color);
-    if ($product->regularPrice != $product->salePrice ) {
+
+    </tr>
+    <?
+    foreach ($response->results as $product) {
         ?>
-
-        <div>
-            <img src="<?= $product->thumbnailImage ?>" alt="">
-            <div>shortDescription = <?= $product->shortDescription ?></div>
-            <div>color = <?= $product->color ?></div>
-            <div>sku = <?= $product->sku ?></div>
-            <div>regularPrice = <?= $product->regularPrice ?></div>
-            <div>salePrice = <?= $product->salePrice ?></div>
-            <div>condition <?= $product->condition ?></div>
-        </div>
-
-        <table>
+        <tr style="bo">
+            <td><?= $product->sku ?></td> <?$string.=$product->sku.';'?>
+            <td><img style="width: 100px;" src="<?= $product->images->standard ?>" alt=""></td><?$string.= $product->images->standard .";"?>
+            <td><?= $product->names->title ?></td><?$string.=$product->names->title.';'?>
+            <td><?= $product->prices->regular ?></td><?$string.=$product->prices->regular.';'?>
             <?
-            foreach ($product->details as $detail) {
+                uasort($product->offers,"mySortCondition");
+            foreach ($product->offers as $value) {
                 ?>
-                <tr>
-                    <td><?= $detail->name ?></td>
-                    <td><?= $detail->value ?></td>
-                </tr>
+
+                <td><?= $value->prices->current ?></td>
+                <?$string.= $value->prices->current.';'?>
                 <?
             } ?>
-        </table>
-
-
-        <?
+        </tr>
+        <? $string.="\r\n ";
     }
-}
-?>
+    ?>
+</table>
 
+
+<?
+if (!empty($_GET['save'])) {
+    file_put_contents($_GET['save'].".csv", $string);
+}
 
