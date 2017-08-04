@@ -53,3 +53,12 @@ document.forms.upload.onsubmit = function () {
     }
     return false;
 }
+
+for (var i = 0; i < upl.length; i++) {
+    var obj = upl[i];
+    
+}
+
+
+
+
