@@ -13,7 +13,7 @@
         <array />
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="program" value="F:/OpenServer/domains/garbage/node_modules/.bin/babel" />
+      <option name="program" value="F:/OpenServer/domains/garbage/node_modules/.bin/babel-node.cmd" />
       <option name="scopeName" value="Project Files" />
       <option name="trackOnlyRoot" value="false" />
       <option name="workingDir" value="$ContentRoot$" />
